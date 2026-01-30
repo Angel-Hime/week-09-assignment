@@ -26,8 +26,8 @@ export default async function CreateProfile({ params }) {
       [user?.id, user?.firstName, user?.lastName, user?.username, email, bio],
     );
 
-    revalidatePath(`/profile/${user?.username}`);
-    redirect(`/profile/${user?.username}`);
+    revalidatePath(`/my-profile/${user?.username}`);
+    redirect(`/my-profile/${user?.username}`);
   }
 
   return (

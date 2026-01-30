@@ -1,7 +1,6 @@
-import DropdownNav from "@/components/DropdownNav";
+import HoverProfile from "@/components/HoverProfile";
 import PostDialogue from "@/components/PostDialog";
 import { db } from "@/utils/dbConnection";
-import Link from "next/link";
 
 import { currentUser } from "@clerk/nextjs/server";
 
@@ -11,9 +10,10 @@ import { redirect } from "next/navigation";
 export default async function TimelinePage() {
   // TODO: render list of all posts from all users --> by date?
   // render the user that posted them? --> card --> maybe an imported component??
+
   const timeline = (
     await db.query(
-      `SELECT social_posts.*, social_users.user_username FROM social_posts JOIN social_users ON social_users.user_id = social_posts.user_id`,
+      `SELECT social_posts.*, social_users.user_username, social_users.user_bio FROM social_posts JOIN social_users ON social_users.user_id = social_posts.user_id`,
     )
   ).rows;
 
@@ -34,6 +34,7 @@ export default async function TimelinePage() {
       [content, id],
     );
 
+    db.query();
     revalidatePath(`/timeline`);
     redirect(`/timeline`);
   }
@@ -41,6 +42,26 @@ export default async function TimelinePage() {
     hour: `2-digit`,
     minute: `2-digit`,
   });
+
+  async function handleLike(formData) {
+    "use server";
+    const { postId, likes } = Object.fromEntries(formData);
+    console.log(postId);
+    const like = Number(likes) + 1;
+    console.log(like);
+
+    db.query(`INSERT INTO social_likes (post_id, user_id) VALUES ($1, $2)`, [
+      postId,
+      id,
+    ]);
+
+    db.query(`UPDATE social_posts SET post_likes = $1 WHERE post_id = $2`, [
+      like,
+      postId,
+    ]);
+    revalidatePath(`/timeline`);
+  }
+
   return (
     <div>
       <header className="flex flex-col  place-self-center items-center gap-10">
@@ -58,15 +79,22 @@ export default async function TimelinePage() {
         {timeline.map((post) => (
           <div
             key={post.post_id}
-            className="border-2 border-white m-4 p-4 flex flex-row gap-2 w-2/3 place-self-center"
+            className="place-self-center border-2 border-white m-4 p-4 flex flex-row gap-2 w-2/3 justify-between"
           >
+            <HoverProfile username={post.user_username} bio={post.user_bio} />
+
+            <p>&quot;{post.post_content}&quot;</p>
+
             <p>
               {post.post_date.toISOString().split("T")[0]}{" "}
               {formatter.format(post.post_date)}
             </p>
-            <p className="mt-4">{post.user_username}: </p>
 
-            <p className="mt-4">&quot;{post.post_content}&quot;</p>
+            <form action={handleLike}>
+              <input type="hidden" name="postId" value={post.post_id} />
+              <input type="hidden" name="likes" value={post.post_likes} />
+              {post.post_likes} 💖 <button type="submit">Like</button>
+            </form>
           </div>
         ))}
       </main>

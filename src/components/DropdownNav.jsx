@@ -32,7 +32,7 @@ export default async function DropdownNav() {
           <DropdownMenu.Label className={styles.Label}>Menu</DropdownMenu.Label>
           <DropdownMenu.Separator className={styles.Separator} />
           <DropdownMenu.Item className={styles.Item}>
-            <Link href={`/profile/${user?.username}`}>My Profile</Link>{" "}
+            <Link href={`/my-profile/${user?.username}`}>My Profile</Link>{" "}
             <div className={styles.RightSlot}>
               <UserAvatar />
             </div>

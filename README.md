@@ -36,11 +36,11 @@ Stretch Requirements
 
     🏹 Allow users to delete their content.
 
-    	- prioritise
+    ✔️ - users can go to edit and, during the edit process, are provided with a delete button.
 
     🏹 Allow users to view other profiles directly from posts they see on the global timeline, using a dynamic users route (e.g. /user/[userId]).
 
-    	- this will not be profile/$[username]; that we can keep separate
+    ✔️ - using a separate route /timeline/user/[username] I have created a public profile page
 
     🏹 Let users follow each other by establishing a follower and followee relationship between profiles.
 
@@ -48,7 +48,8 @@ Stretch Requirements
 
     🏹 Enable users to like posts by linking their user_id to the liked_post in a junction table.
 
-    	- prioritise --> junction table with user_likes matching to social_posts post_id?
+    	- I have created a table for likes joining user and post id --> I am able to update the shown amount of likes by updating the post_likes column.
+        --> I need to now ensure that if the user has liked already, the feature is not available
 
     🏹 Ensure that a user’s biography cannot be left blank. If a user logs in without one, prompt them to add this information.
 
@@ -59,7 +60,7 @@ Stretch Requirements
 
     ✔️ - page will notify that the user does not exist if they go to a 'profile' page
 
-        - user page
+    ✔️ - user page
 
 Sources and Attributions
 

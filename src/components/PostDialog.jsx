@@ -1,12 +1,14 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import styles from "@/styles/PostDialogueStyle.module.css";
+import DeleteDialog from "./DeleteDialog";
 
 export default async function PostDialogue({
   handle,
   trigger,
   description,
   prefill,
+  username,
 }) {
   let formattedDate = null;
   let formattedTime = null;
@@ -63,10 +65,11 @@ export default async function PostDialogue({
             >
               <button type="submit" className={`${styles.Button} green`}>
                 {" "}
-                Post
+                Confirm
               </button>
             </div>
           </form>
+          <DeleteDialog post={prefill} username={username} />
           <Dialog.Close asChild>
             <button className={styles.IconButton} aria-label="Close">
               <Cross2Icon />

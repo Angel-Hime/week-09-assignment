@@ -3,7 +3,7 @@
 import * as Tabs from "@radix-ui/react-tabs";
 import styles from "@/styles/loggingTabStyles.module.css";
 
-export default function TabComponent() {
+export default function FollowTab() {
   return (
     <Tabs.Root className={styles.Root} defaultValue="tab1">
       <Tabs.List className={styles.List} aria-label=" ">

@@ -50,8 +50,8 @@ export default async function ProfilePage({ params }) {
       `UPDATE social_posts SET post_date = $1, post_content = $2 WHERE post_id = $3`,
       [updateDate, content, post_id],
     );
-    revalidatePath(`/profile/${username}`);
-    redirect(`/profile/${username}`);
+    revalidatePath(`/my-profile/${username}`);
+    redirect(`/my-profile/${username}`);
   }
 
   console.log(postsQuery);
@@ -62,7 +62,7 @@ export default async function ProfilePage({ params }) {
 
   // users can only see their own profile page
   if (username != user.username) {
-    redirect(`/profile/${user.username}`);
+    redirect(`/my-profile/${user.username}`);
   }
 
   const formatter = new Intl.DateTimeFormat(`en-UK`, {
@@ -74,10 +74,11 @@ export default async function ProfilePage({ params }) {
     <>
       {/* Will probably have to pass props */}
       <fieldset>
-        <div className="flex flex-row gap-5">
-          <UserAvatar />
-          <h2>{userInfo.user_username}&apos;s Profile</h2>
-        </div>
+        <legend>My Profile</legend>
+
+        <UserAvatar />
+        <h2>username: {userInfo.user_username}</h2>
+
         <p>My Bio: {userInfo.user_bio}</p>
       </fieldset>
       <fieldset className="flex flex-col items-center">
@@ -101,6 +102,7 @@ export default async function ProfilePage({ params }) {
                 trigger={"Edit This..."}
                 description={"...it wasn't purile enough?"}
                 prefill={post}
+                username={username}
               />
             </div>
           </div>
