@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Description
 
-## Getting Started
+<!--  -->
 
-First, run the development server:
+Reflection
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<!--  -->
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Requirements
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+    🎯 Set up user sign-up and user login using Clerk.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+    ✔️	- home page with links to sign in and sign up
 
-## Learn More
+    🎯 Create and display an error/not found page if the user visits a page that doesn’t exist.
 
-To learn more about Next.js, take a look at the following resources:
+    ✔️ - not found pages for user profile, as specific page, and for other pages
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    🎯 Use 1 or more Radix UI Primitive component, or something similar (e.g. use of a different component library to enhance UX, not just Tailwind).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    ✔️ - radix / motion
 
-## Deploy on Vercel
+    🎯 Enable users to create a user profile, and input profile information (such as a user biography) using a form. Users and user information should be stored in their own table in the database and handled with an appropriate route.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ✔️ - username bio location interests , remove the email address (showing it only) --> auth is authentication; current user
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    🎯 Enable users to create posts associated with their Clerk userId. Posts should be displayed on the user’s profile page.
+
+    ✔️ - table for posts --> foreign key = userID
+
+Stretch Requirements
+
+    🏹 Allow users to update their content. You can achieve this either with a dynamic route (“/posts/[id]/edit”) or by creating a modal.
+
+    ✔️ - users can enter their profile page and see their comments and edit them accordingly
+
+    🏹 Allow users to delete their content.
+
+    	- prioritise
+
+    🏹 Allow users to view other profiles directly from posts they see on the global timeline, using a dynamic users route (e.g. /user/[userId]).
+
+    	- this will not be profile/$[username]; that we can keep separate
+
+    🏹 Let users follow each other by establishing a follower and followee relationship between profiles.
+
+    	-
+
+    🏹 Enable users to like posts by linking their user_id to the liked_post in a junction table.
+
+    	- prioritise --> junction table with user_likes matching to social_posts post_id?
+
+    🏹 Ensure that a user’s biography cannot be left blank. If a user logs in without one, prompt them to add this information.
+
+    	- logic to check in entry is incomplete and have popup to notify
+            --> have the server call the data and have the alert pop up anywhere if(userID)
+
+    🏹 Create and display an error/not found page if the user visits another users profile that doesn’t exist.
+
+    ✔️ - page will notify that the user does not exist if they go to a 'profile' page
+
+        - user page
+
+Sources and Attributions
+
+Tabs: https://www.radix-ui.com/primitives/docs/components/tabs
+
+Dropdown Menu: https://www.radix-ui.com/primitives/docs/components/dropdown-menu
+
+Dialog: https://www.radix-ui.com/primitives/docs/components/dialog
