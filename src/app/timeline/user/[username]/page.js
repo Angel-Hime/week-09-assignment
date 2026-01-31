@@ -1,3 +1,4 @@
+import FollowComponent from "@/components/FollowComponent";
 import { db } from "@/utils/dbConnection";
 import { currentUser } from "@clerk/nextjs/server";
 import { notFound, redirect } from "next/navigation";
@@ -9,7 +10,7 @@ export default async function PublicProfile({ params }) {
 
   const userQuery = (
     await db.query(
-      `SELECT social_users.user_username, social_users.user_bio, social_users.user_id, social_posts.* FROM social_users JOIN social_posts ON social_users.user_id = social_posts.user_id WHERE user_username = $1`,
+      `SELECT social_users.user_username, social_users.user_bio, social_users.user_id, social_posts.* FROM social_users JOIN social_posts ON social_users.user_id = social_posts.user_id WHERE user_username = $1 ORDER BY social_posts.post_date DESC`,
       [username],
     )
   ).rows;
@@ -46,6 +47,7 @@ export default async function PublicProfile({ params }) {
         <p>
           {username}&apos;s Bio: {userQuery[0].user_bio}
         </p>
+        <FollowComponent username={username} user_id={userQuery.user_id} />
       </fieldset>
       <fieldset className="flex flex-col items-center">
         <legend> Look at what {username} said in The Empty Room... </legend>

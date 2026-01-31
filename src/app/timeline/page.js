@@ -1,4 +1,5 @@
 import HoverProfile from "@/components/HoverProfile";
+
 import PostDialogue from "@/components/PostDialog";
 import { db } from "@/utils/dbConnection";
 
@@ -8,22 +9,28 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export default async function TimelinePage() {
-  // TODO: render list of all posts from all users --> by date?
-  // render the user that posted them? --> card --> maybe an imported component??
-
+  // to render posts below
   const timeline = (
     await db.query(
-      `SELECT social_posts.*, social_users.user_username, social_users.user_bio FROM social_posts JOIN social_users ON social_users.user_id = social_posts.user_id`,
+      `SELECT social_posts.*, social_users.user_username, social_users.user_bio FROM social_posts JOIN social_users ON social_users.user_id = social_posts.user_id ORDER BY social_posts.post_date DESC`,
     )
   ).rows;
+  // to render likes below
+  const likeData = (await db.query(`SELECT * FROM social_likes`)).rows;
+  console.log(likeData);
 
-  // TODO: we want to render a form to insert posts data into posts table
-  // - we also need to insert the user id into the posts table, make sure that you have some sql that reads the user id from the users table, OR use the auth function from clerk to get that data(the userID)
-  // n.b. the user won't know their own id
+  const likeId = likeData.map((like) => {
+    return like.like_id;
+  });
+  // this is an array --> work through it to wrangle each id for below comparison
 
+  // console.log();
+
+  //current id
   const { id } = await currentUser();
   // console.log(id);
 
+  // new post
   async function handlePost(formData) {
     "use server";
 
@@ -34,7 +41,6 @@ export default async function TimelinePage() {
       [content, id],
     );
 
-    db.query();
     revalidatePath(`/timeline`);
     redirect(`/timeline`);
   }
@@ -43,23 +49,33 @@ export default async function TimelinePage() {
     minute: `2-digit`,
   });
 
+  // like post
   async function handleLike(formData) {
     "use server";
     const { postId, likes } = Object.fromEntries(formData);
     console.log(postId);
     const like = Number(likes) + 1;
     console.log(like);
-
-    db.query(`INSERT INTO social_likes (post_id, user_id) VALUES ($1, $2)`, [
-      postId,
-      id,
-    ]);
-
-    db.query(`UPDATE social_posts SET post_likes = $1 WHERE post_id = $2`, [
-      like,
-      postId,
-    ]);
-    revalidatePath(`/timeline`);
+    const likeId = postId + id;
+    try {
+      const likeQuery = (
+        await db.query(
+          `INSERT INTO social_likes (like_id, post_id, user_id) VALUES ($1, $2, $3)`,
+          [likeId, postId, id],
+        )
+      ).rows;
+      if (likeQuery) {
+        db.query(`UPDATE social_posts SET post_likes = $1 WHERE post_id = $2`, [
+          like,
+          postId,
+        ]);
+      }
+    } catch (strays) {
+      console.error({ strays });
+    } finally {
+      revalidatePath(`/timeline`);
+      redirect(`/timeline`);
+    }
   }
 
   return (
@@ -82,19 +98,21 @@ export default async function TimelinePage() {
             className="place-self-center border-2 border-white m-4 p-4 flex flex-row gap-2 w-2/3 justify-between"
           >
             <HoverProfile username={post.user_username} bio={post.user_bio} />
-
             <p>&quot;{post.post_content}&quot;</p>
-
             <p>
               {post.post_date.toISOString().split("T")[0]}{" "}
               {formatter.format(post.post_date)}
             </p>
-
             <form action={handleLike}>
               <input type="hidden" name="postId" value={post.post_id} />
               <input type="hidden" name="likes" value={post.post_likes} />
-              {post.post_likes} 💖 <button type="submit">Like</button>
+              {post.post_likes} 💖
+              <button type="submit">Like</button>
             </form>
+
+            {/* ? (
+              
+            ) : null} */}
           </div>
         ))}
       </main>

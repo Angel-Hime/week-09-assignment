@@ -7,7 +7,6 @@ import Link from "next/link";
 export default function signInPage() {
   return (
     <>
-      <Link href={"/"}>Return Home</Link>
       <SignIn />
     </>
   );

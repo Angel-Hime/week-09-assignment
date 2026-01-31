@@ -38,7 +38,10 @@ export default async function ProfilePage({ params }) {
   console.log(user.id);
 
   const postsQuery = (
-    await db.query(`SELECT * FROM social_posts WHERE user_id = $1`, [user.id])
+    await db.query(
+      `SELECT * FROM social_posts WHERE user_id = $1 ORDER BY social_posts.post_date DESC`,
+      [user.id],
+    )
   ).rows;
 
   async function handleEditPost(formData) {
