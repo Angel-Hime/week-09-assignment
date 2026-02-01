@@ -10,9 +10,13 @@ Users cannot view the private profiles of other users as this will redirect them
 
 Reflection
 
+In order to look after my mental health I decided not to carry on with development on thias project. This is not a decision that I tool lightly as I an really annoyed at myself for not continuing to complete the additiional  stretch goals and cleaning things up in terms of design. 
+
 I just couldn't figure out how to conditionally show the like button; I wanted to swap it for a dislike button with reverse finctionality but I think that perhaps the logic I used just wasn't the right logic to run this test, or I just got too burned out and couldn't think fully about it. The like functionality works and the user can only like once, so that was the foundational functionality sorted at least.
 
 In terms of the other stretch goals, I was just burned out; I had plans to attain the followers functionality, which is why the hover component shows the data as pending.
+
+I know that I can do more thatn this I judt didn't find the time over the weekend. I am really sorry.
 
 Requirements
 
@@ -65,8 +69,9 @@ Stretch Requirements
 
     🏹 Ensure that a user’s biography cannot be left blank. If a user logs in without one, prompt them to add this information.
 
-    	- logic to check in entry is incomplete and have popup to notify
-            --> have the server call the data and have the alert pop up anywhere if(userID)
+    	- logic to check if entry is incomplete and have popup to notify
+            --> have the server call the data fpr the current user and have the alert pop up anywhere if(userID)
+            --> I want to have a component that fetches --> the drop down menu. 
 
     🏹 Create and display an error/not found page if the user visits another users profile that doesn’t exist.
 
