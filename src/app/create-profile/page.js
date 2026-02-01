@@ -22,8 +22,8 @@ export default async function CreateProfile({ params }) {
     console.log(formData);
 
     db.query(
-      `INSERT INTO social_users (user_id, user_first, user_second, user_username, user_email, user_bio) VALUES ($1, $2, $3, $4, $5, $6)`,
-      [user?.id, user?.firstName, user?.lastName, user?.username, email, bio],
+      `INSERT INTO social_users (user_id, user_first, user_second, user_username, user_bio) VALUES ($1, $2, $3, $4, $5)`,
+      [user?.id, user?.firstName, user?.lastName, user?.username, bio],
     );
 
     revalidatePath(`/my-profile/${user?.username}`);
