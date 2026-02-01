@@ -4,7 +4,9 @@ import { revalidatePath } from "next/cache";
 
 export default async function FollowComponent({ username, user_id }) {
   const { id } = await currentUser();
-
+  console.log(id);
+  console.log(username);
+  console.log(user_id);
   const followData = await db.query(
     `SELECT * FROM social_follow WHERE user_username = $1`,
     [username],
@@ -21,7 +23,7 @@ export default async function FollowComponent({ username, user_id }) {
 
     // Need to ensure that we have all of the data
     db.query(
-      `INSERT INTO social_follow ( follow_id, user_username, user_id, current_user_id) VALUES ($1, $2, $3, $4)`,
+      `INSERT INTO social_follow (follow_id, user_username, user_id, current_user_id) VALUES ($1, $2, $3, $4)`,
       [followId, username, user_id, id],
     );
     revalidatePath(`timeline/user/${username}`);
