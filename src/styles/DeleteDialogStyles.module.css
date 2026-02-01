@@ -8,7 +8,7 @@
 .Content {
   background-color: pink;
   border-radius: 6px;
-  box-shadow: var(--shadow-6);
+  box-shadow: pink;
   position: fixed;
   top: 25%;
   left: 50%;
@@ -25,14 +25,12 @@
 
 .Title {
   margin: 0;
-  color: var(--mauve-12);
   font-size: 17px;
   font-weight: 500;
 }
 
 .Description {
   margin-bottom: 20px;
-  color: var(--mauve-11);
   font-size: 15px;
   line-height: 1.5;
 }
@@ -57,35 +55,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid var(--violet-6);
     outline-offset: 1px;
-  }
-
-  &:global(.violet) {
-    background-color: var(--violet-4);
-    color: var(--violet-12);
-    outline-color: var(--violet-6);
-    &:hover {
-      background-color: var(--mauve-3);
-    }
-  }
-
-  &:global(.red) {
-    background-color: var(--red-4);
-    color: var(--red-11);
-    outline-color: var(--red-7);
-    &:hover {
-      background-color: var(--red-5);
-    }
-  }
-
-  &:global(.mauve) {
-    background-color: var(--mauve-4);
-    color: var(--mauve-11);
-    outline-color: var(--mauve-7);
-    &:hover {
-      background-color: var(--mauve-5);
-    }
   }
 }
 
