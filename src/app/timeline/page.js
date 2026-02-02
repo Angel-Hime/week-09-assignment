@@ -72,10 +72,9 @@ export default async function TimelinePage() {
       }
     } catch (strays) {
       console.error({ strays });
-    } finally {
-      revalidatePath(`/timeline`);
-      redirect(`/timeline`);
     }
+    revalidatePath(`/timeline`);
+    redirect(`/timeline`);
   }
 
   return (
