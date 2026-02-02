@@ -14,9 +14,9 @@ In order to look after my mental health I decided not to carry on with developme
 
 I just couldn't figure out how to conditionally show the like button; I wanted to swap it for a dislike button with reverse finctionality but I think that perhaps the logic I used just wasn't the right logic to run this test, or I just got too burned out and couldn't think fully about it. The like functionality works and the user can only like once, so that was the foundational functionality sorted at least.
 
-In terms of the other stretch goals, I was just burned out; I had plans to attain the followers functionality, which is why the hover component shows the data as pending.
+In terms of the other stretch goals, I was just tired and whilst I had plans to attain the followers functionality (which is why the hover component shows the data as pending and there is an unusable button on profiles), I just didn't get back to it.
 
-I know that I can do more than this in terms of design, I just didn't find the time or energy over the weekend.
+I know that I could have done more than this in terms of design, I just didn't find the time or energy over the weekend.
 
 Requirements
 
