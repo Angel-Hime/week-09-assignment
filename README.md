@@ -16,7 +16,7 @@ I just couldn't figure out how to conditionally show the like button; I wanted t
 
 In terms of the other stretch goals, I was just burned out; I had plans to attain the followers functionality, which is why the hover component shows the data as pending.
 
-I know that I can do more thatn this I judt didn't find the time over the weekend. I am really sorry.
+I know that I can do more than this in terms of design, I just didn't find the time or energy over the weekend.
 
 Requirements
 
