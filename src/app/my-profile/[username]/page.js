@@ -73,6 +73,20 @@ export default async function ProfilePage({ params }) {
     minute: `2-digit`,
   });
 
+  async function handlePost(formData) {
+    "use server";
+
+    const { content } = Object.fromEntries(formData);
+    // console.log(content);
+    db.query(
+      `INSERT INTO social_posts (post_content, user_id) VALUES ($1, $2)`,
+      [content, user.id],
+    );
+
+    revalidatePath(`/my-profile/${username}`);
+    redirect(`/my-profile/${username}`);
+  }
+
   return (
     <>
       {/* Will probably have to pass props */}
@@ -83,6 +97,12 @@ export default async function ProfilePage({ params }) {
         <h2>username: {userInfo.user_username}</h2>
 
         <p>My Bio: {userInfo.user_bio}</p>
+
+        <PostDialogue
+          handle={handlePost}
+          trigger={"Shout into the void!"}
+          description={"Go on then... say something vacuous..."}
+        />
       </fieldset>
       <fieldset className="flex flex-col items-center">
         <legend> Look at what you shouted to nobody... </legend>

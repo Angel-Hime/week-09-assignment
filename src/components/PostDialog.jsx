@@ -24,7 +24,7 @@ export default async function PostDialogue({
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <button className={`${styles.Button} violet`}>{trigger}</button>
+        <button className={`${styles.Button}`}>{trigger}</button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className={styles.Overlay} />
@@ -48,7 +48,7 @@ export default async function PostDialogue({
                 ></input>
               </div>
 
-              <input
+              <textarea
                 className={styles.Input}
                 name="content"
                 placeholder="Shout into the empty room..."
@@ -63,13 +63,13 @@ export default async function PostDialogue({
                 justifyContent: "flex-end",
               }}
             >
-              <button type="submit" className={`${styles.Button} green`}>
-                {" "}
+              <button type="submit" className={styles.Button}>
                 Confirm
               </button>
             </div>
           </form>
-          <DeleteDialog post={prefill} username={username} />
+          {prefill ? <DeleteDialog post={prefill} username={username} /> : null}
+
           <Dialog.Close asChild>
             <button className={styles.IconButton} aria-label="Close">
               <Cross2Icon />

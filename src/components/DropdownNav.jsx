@@ -22,7 +22,7 @@ export default async function DropdownNav() {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button className={styles.IconButton} aria-label="Customise options">
+        <button className={styles.IconButton}>
           <HamburgerMenuIcon />
         </button>
       </DropdownMenu.Trigger>
@@ -50,22 +50,25 @@ export default async function DropdownNav() {
             <DropdownMenu.Portal>
               <DropdownMenu.SubContent
                 className={styles.SubContent}
-                sideOffset={2}
-                alignOffset={-5}
+                sideOffset={10}
+                alignOffset={-3}
               >
+                <DropdownMenu.Arrow className={styles.Arrow} />
+                <DropdownMenu.Separator className={styles.Separator} />
                 <DropdownMenu.Item className={styles.Item}>
-                  <Link href={`/account-settings/${user?.username}`}>
+                  <Link
+                    className={styles.RightSlot}
+                    href={`/account-settings/${user?.username}`}
+                  >
                     My Account Settings
                   </Link>
                 </DropdownMenu.Item>
                 <DropdownMenu.Separator className={styles.Separator} />
                 <DropdownMenu.Item className={styles.Item}>
-                  {" "}
-                  <div className={styles.RightSlot}>
-                    <SignOutButton />
-                  </div>
+                  <SignOutButton>
+                    <button className={styles.RightSlot}>Sign Out</button>
+                  </SignOutButton>
                 </DropdownMenu.Item>
-
                 <DropdownMenu.Separator className={styles.Separator} />
               </DropdownMenu.SubContent>
             </DropdownMenu.Portal>

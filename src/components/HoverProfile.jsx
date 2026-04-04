@@ -7,15 +7,10 @@ export default function HoverProfile({ username, bio }) {
   return (
     <HoverCard.Root>
       <HoverCard.Trigger asChild>
-        <Link
-          className={styles.ImageTrigger}
-          href={`timeline/user/${username}`}
-        >
-          <div className="flex flex-row gap-1">
-            {/* need to get the poster icon */}
-            {username}
-          </div>
-        </Link>
+        <div className={styles.ImageTrigger}>
+          {/* need to get the poster icon */}
+          {username}
+        </div>
       </HoverCard.Trigger>
       <HoverCard.Portal>
         <HoverCard.Content className={styles.Content} sideOffset={5}>

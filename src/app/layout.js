@@ -1,7 +1,12 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider, SignedIn } from "@clerk/nextjs";
 import Header from "@/components/Header";
+
+const RobotoMono = Roboto_Mono({
+  variable: "--font-roboto-mono",
+  subsets: ["latin"],
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,10 +28,12 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} ${RobotoMono.className} antialiased`}
         >
           <SignedIn>
-            <Header />
+            <div className="mt-10 h-20">
+              <Header />
+            </div>
           </SignedIn>
           {children}
         </body>

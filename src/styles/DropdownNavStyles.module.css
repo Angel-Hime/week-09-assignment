@@ -1,6 +1,6 @@
 .Content,
 .SubContent {
-  min-width: 220px;
+  width: 220px;
   background-color: white;
   border-radius: 6px;
   padding: 5px;
@@ -28,53 +28,35 @@
 .CheckboxItem,
 .RadioItem,
 .SubTrigger {
-  font-size: 13px;
+  font-size: 0.7vmax;
   line-height: 1;
-  color: var(--violet-11);
+  background-color: var(--background);
   border-radius: 3px;
   display: flex;
   align-items: center;
-  height: 25px;
+  height: 4vh;
   padding: 0 5px;
   position: relative;
-  padding-left: 25px;
+  padding-left: 1vw;
   user-select: none;
   outline: none;
-  &[data-disabled] {
-    color: var(--mauve-8);
-    pointer-events: none;
-  }
   &[data-highlighted] {
-    background-color: var(--violet-9);
-    color: var(--violet-1);
+    background-color: var(--foreground);
+    color: var(--background);
   }
-}
-
-.SubTrigger[data-state="open"]:not([data-highlighted], [data-disabled]) {
-  background-color: var(--violet-4);
-  color: var(--violet-11);
 }
 
 .Label {
-  padding-left: 25px;
-  font-size: 12px;
+  text-align: center;
+  font-size: 0.7vmax;
   line-height: 25px;
-  color: var(--mauve-11);
+  color: var(--foreground);
 }
 
 .Separator {
-  height: 1px;
-  background-color: var(--violet-6);
-  margin: 5px;
-}
-
-.ItemIndicator {
-  position: absolute;
-  left: 0;
-  width: 25px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  height: 0.2vh;
+  background-color: var(--foreground);
+  margin: 0.4vmax;
 }
 
 .Arrow {
@@ -82,6 +64,7 @@
 }
 
 .IconButton {
+  cursor: pointer;
   all: unset;
   font-family: inherit;
   border-radius: 100%;
@@ -90,41 +73,29 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--violet-11);
+  z-index: 1;
+  border: 2px solid white;
   background-color: white;
-  box-shadow: 0 2px 10px var(--black-a7);
-  user-select: none;
   &:hover {
-    background-color: var(--violet-3);
-  }
-  &:focus {
-    box-shadow: 0 0 0 2px black;
+    background-color: var(--background);
+    box-shadow:
+      inset 2px 2px 10px white,
+      inset -2px -2px 10px white;
   }
 }
 
 .RightSlot {
   margin-left: auto;
-  padding-left: 20px;
-  color: var(--mauve-11);
+  padding-right: 20px;
+  cursor: pointer;
   [data-highlighted] > & {
-    color: white;
-  }
-  [data-disabled] & {
-    color: var(--mauve-8);
+    color: var(--background);
   }
 }
 
 .RightSlotOption {
   margin-left: auto;
   padding-left: 20px;
-  color: var(--mauve-11);
-  cursor: pointer;
-  [data-highlighted] > & {
-    color: black;
-  }
-  [data-disabled] & {
-    color: var(--mauve-8);
-  }
 }
 
 @keyframes slideUpAndFade {

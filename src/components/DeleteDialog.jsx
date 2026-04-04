@@ -1,5 +1,5 @@
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import styles from "@/styles/DeleteDialogStyles.module.css";
+import styles from "@/styles/PostDialogueStyle.module.css";
 import { db } from "@/utils/dbConnection";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -31,7 +31,16 @@ export default async function DeleteDialog({ post, username }) {
             Delete Post
           </AlertDialog.Title>
           <AlertDialog.Description className={styles.Description}>
-            Oh, so you do regret saying this entirely superficial statement, eh?
+            <>
+              {" "}
+              <p>
+                Oh, so you do regret saying this entirely superficial statement,
+                eh?
+              </p>{" "}
+              <p className="bg-black underline text-center">
+                &apos;{post.post_content}&apos;
+              </p>
+            </>
           </AlertDialog.Description>
           <div style={{ display: "flex", gap: 25, justifyContent: "flex-end" }}>
             <AlertDialog.Cancel asChild>
@@ -43,7 +52,9 @@ export default async function DeleteDialog({ post, username }) {
                 defaultValue={post?.post_id}
                 type="hidden"
               />
-              <button type="submit">I Promise I Want To Delete This!</button>
+              <button className={styles.Button} type="submit">
+                I Promise I Want To Delete This!
+              </button>
             </form>
           </div>
         </AlertDialog.Content>

@@ -1,41 +1,45 @@
 import HoverProfile from "@/components/HoverProfile";
-
 import PostDialogue from "@/components/PostDialog";
 import { db } from "@/utils/dbConnection";
-
 import { currentUser } from "@clerk/nextjs/server";
-
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import * as styles from "@/styles/TimelineStyles.module.css";
 
 export default async function TimelinePage() {
+  //current id
+  const { id } = await currentUser();
+  // console.log(id);
+
   // to render posts below
   const timeline = (
     await db.query(
-      `SELECT social_posts.*, social_users.user_username, social_users.user_bio FROM social_posts JOIN social_users ON social_users.user_id = social_posts.user_id ORDER BY social_posts.post_date DESC`,
+      `SELECT social_posts.*, social_users.user_username, social_users.user_bio 
+      FROM social_posts 
+      JOIN social_users ON social_users.user_id = social_posts.user_id 
+      ORDER BY social_posts.post_date DESC`,
     )
   ).rows;
   // to render likes below
   const likeData = (await db.query(`SELECT * FROM social_likes`)).rows;
-  console.log(likeData);
+  // console.log(likeData);
 
   const likeId = likeData.map((like) => {
-    return like.like_id;
+    //console.log(id);
+    if (like.like_id.slice(1) === id) {
+      return like.like_id.split("u")[0];
+    }
+    // return like.like_id;
   });
-  // this is an array --> work through it to wrangle each id for below comparison
 
-  // console.log();
-
-  //current id
-  const { id } = await currentUser();
-  // console.log(id);
+  //console.log(likeId); // output: array --> work through it to wrangle each post_id for below comparison
 
   // new post
   async function handlePost(formData) {
     "use server";
 
     const { content } = Object.fromEntries(formData);
-    console.log(content);
+    // console.log(content);
     db.query(
       `INSERT INTO social_posts (post_content, user_id) VALUES ($1, $2)`,
       [content, id],
@@ -53,9 +57,9 @@ export default async function TimelinePage() {
   async function handleLike(formData) {
     "use server";
     const { postId, likes } = Object.fromEntries(formData);
-    console.log(postId);
+    // console.log(postId);
     const like = Number(likes) + 1;
-    console.log(like);
+    // console.log(like);
     const likeId = postId + id;
     try {
       const likeQuery = (
@@ -71,15 +75,15 @@ export default async function TimelinePage() {
         ]);
       }
     } catch (strays) {
-      console.error({ strays });
+      console.error({ message: "you have already liked this" });
     }
     revalidatePath(`/timeline`);
     redirect(`/timeline`);
   }
 
   return (
-    <div>
-      <header className="flex flex-col  place-self-center items-center gap-10">
+    <div className={styles.pageContainer}>
+      <header className={styles.headingContainer}>
         <h1>
           Even when you think you are on your own, people still have something
           to say, check these out...
@@ -90,18 +94,18 @@ export default async function TimelinePage() {
           description={"Go on then... say something vacuous..."}
         />
       </header>
-      <main className="flex flex-col">
+
+      <main className={styles.postsContainer}>
+        {/* mapping posts */}
         {timeline.map((post) => (
-          <div
-            key={post.post_id}
-            className="place-self-center border-2 border-white m-4 p-4 flex flex-row gap-2 w-2/3 justify-between"
-          >
+          <div key={post.post_id} className={styles.post}>
             <HoverProfile username={post.user_username} bio={post.user_bio} />
-            <p>&quot;{post.post_content}&quot;</p>
-            <p>
-              {post.post_date.toISOString().split("T")[0]}{" "}
-              {formatter.format(post.post_date)}
+            <p className={styles.postContent}>
+              &quot;{post.post_content}&quot;
             </p>
+            <p>{post.post_date.toISOString().split("T")[0]}</p>
+            <p>{formatter.format(post.post_date)}</p>
+            {/* conditionally render the like functionality */}
             <form action={handleLike}>
               <input type="hidden" name="postId" value={post.post_id} />
               <input type="hidden" name="likes" value={post.post_likes} />
