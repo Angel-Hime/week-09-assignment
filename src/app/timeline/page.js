@@ -112,10 +112,6 @@ export default async function TimelinePage() {
               {post.post_likes} 💖
               <button type="submit">Like</button>
             </form>
-
-            {/* ? (
-              
-            ) : null} */}
           </div>
         ))}
       </main>
